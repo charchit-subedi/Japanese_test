@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stored user profile information and progress.",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "streak": { "type": "integer" },
+        "totalXP": { "type": "integer" },
+        "completedLessons": { "type": "integer" },
+        "lastActive": { "type": "integer" }
+      },
+      "required": ["email", "streak", "totalXP"]
+    },
+    "PracticeSession": {
+      "title": "Practice Session",
+      "description": "Details of a specific practice session completed by the user.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["hiragana", "katakana", "kanji"] },
+        "score": { "type": "integer" },
+        "totalItems": { "type": "integer" },
+        "timestamp": { "type": "integer" },
+        "perfect": { "type": "boolean" }
+      },
+      "required": ["type", "score", "totalItems", "timestamp"]
+    },
+    "Material": {
+      "title": "Study Material",
+      "description": "AI-generated study materials including Kanji and test questions.",
+      "type": "object",
+      "properties": {
+        "metadata": { "type": "object" },
+        "kanji_data": { "type": "array" },
+        "mock_test": { "type": "array" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["metadata", "kanji_data", "mock_test", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual user profiles"
+    },
+    "/users/{userId}/sessions/{sessionId}": {
+      "schema": "PracticeSession",
+      "description": "Practice history for each user"
+    },
+    "/users/{userId}/materials/{materialId}": {
+      "schema": "Material",
+      "description": "AI generated study materials"
+    }
+  }
+}
